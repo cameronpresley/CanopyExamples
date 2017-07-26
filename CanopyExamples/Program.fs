@@ -1,7 +1,23 @@
-﻿// Learn more about F# at http://fsharp.org
-// See the 'F# Tutorial' project for more help.
+﻿open canopy
 
 [<EntryPoint>]
-let main argv = 
-    printfn "%A" argv
-    0 // return an integer exit code
+let main _ =
+  configuration.wipSleep <- 0.2
+  configuration.compareTimeout <- 10.0
+  configuration.elementTimeout <- 10.0
+  configuration.pageTimeout <- 10.0
+  configuration.failFast := true
+
+
+  start chrome
+  resize (1400, 900)
+
+  homePage.all()
+
+  run()
+
+  printfn "Press [enter] to quit"
+  System.Console.ReadKey() |> ignore
+  quit()
+
+  canopy.runner.failedCount
